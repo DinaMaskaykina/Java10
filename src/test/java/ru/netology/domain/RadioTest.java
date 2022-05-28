@@ -1,4 +1,5 @@
 package ru.netology.domain;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -6,13 +7,94 @@ import static org.junit.jupiter.api.Assertions.*;
 class RadioTest {
 
     @Test
-    void StationBorderMin() {
+    void setDefaultStation() {
         Radio model = new Radio();
-        model.setCurrentStation(-1);
+        model.setCurrentStation(20);
+        int expected = 0;
+        assertEquals(expected, model.getCurrentStation());
+    }
+
+    @Test
+    void setAnyNumberStations() {
+        int totalStation = 20;
+        Radio model = new Radio(totalStation);
+        model.setCurrentStation(15);
+        int expected = 15;
+        assertEquals(expected, model.getCurrentStation());
+    }
+
+    @Test
+    void borderNewRadio() {
+        int totalStation = 20;
+        Radio model = new Radio(totalStation);
+        model.setCurrentStation(20);
+
         int expected = 0;
         int actual = model.getCurrentStation();
+
         assertEquals(expected, actual);
     }
+
+    @Test
+    void borderNewRadioMin() {
+        int totalStation = 20;
+        Radio model = new Radio(totalStation);
+        model.setCurrentStation(-1);
+
+        int expected = 0;
+        int actual = model.getCurrentStation();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void newRadioNextMax() {
+        int totalStation = 20;
+        Radio model = new Radio(totalStation);
+        model.setCurrentStation(19);
+
+        int expected = 0;
+        model.next();
+
+        assertEquals(expected, model.getCurrentStation());
+    }
+
+    @Test
+    void newRadioPrevMin() {
+        int totalStation = 20;
+        Radio model = new Radio(totalStation);
+        model.setCurrentStation(0);
+
+        int expected = 19;
+        model.prev();
+
+        assertEquals(expected, model.getCurrentStation());
+    }
+
+    @Test
+    void newRadioNext() {
+        int totalStation = 20;
+        Radio model = new Radio(totalStation);
+        model.setCurrentStation(13);
+
+        int expected = 14;
+        model.next();
+
+        assertEquals(expected, model.getCurrentStation());
+    }
+
+    @Test
+    void newRadioPrev() {
+        int totalStation = 20;
+        Radio model = new Radio(totalStation);
+        model.setCurrentStation(13);
+
+        int expected = 12;
+        model.prev();
+
+        assertEquals(expected, model.getCurrentStation());
+    }
+
 
     @Test
     void StationBorderMax() {
@@ -26,11 +108,20 @@ class RadioTest {
     }
 
     @Test
+    void StationBorderMin() {
+        Radio model = new Radio();
+        model.setCurrentStation(-1);
+        int expected = 0;
+        int actual = model.getCurrentStation();
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void getCurrentStation() {
         Radio model = new Radio();
-        model.setCurrentStation(5);
+        model.setCurrentStation(0);
 
-        int expected = 5;
+        int expected = 0;
         int actual = model.getCurrentStation();
 
         assertEquals(expected, actual);
@@ -81,39 +172,6 @@ class RadioTest {
     }
 
     @Test
-    void stationInput() {
-        Radio model = new Radio();
-        model.stationInput(7);
-
-        int expected = 7;
-        int actual = model.getCurrentStation();
-
-        assertEquals(actual, expected);
-    }
-
-    @Test
-    void stationInputMin() {
-        Radio model = new Radio();
-        model.stationInput(-1);
-
-        int expected = 0;
-        int actual = model.getCurrentStation();
-
-        assertEquals(actual, expected);
-    }
-
-    @Test
-    void stationInputMax() {
-        Radio model = new Radio();
-        model.stationInput(10);
-
-        int expected = 0;
-        int actual = model.getCurrentStation();
-
-        assertEquals(actual, expected);
-    }
-
-    @Test
     void getCurrentVolume() {
         Radio model = new Radio();
         model.getCurrentVolume();
@@ -128,9 +186,9 @@ class RadioTest {
     @Test
     void setCurrentVolume() {
         Radio model = new Radio();
-        model.setCurrentVolume(5);
+        model.setCurrentVolume(100);
 
-        int expected = 5;
+        int expected = 100;
         int actual = model.getCurrentVolume();
 
         assertEquals(expected, actual);
@@ -139,10 +197,10 @@ class RadioTest {
     @Test
     void increaseVolumeBorderMax() {
         Radio model = new Radio();
-        model.setCurrentVolume(10);
+        model.setCurrentVolume(100);
         model.increaseVolume();
 
-        int expected = 10;
+        int expected = 100;
         int actual = model.getCurrentVolume();
 
         assertEquals(actual, expected);
@@ -151,10 +209,10 @@ class RadioTest {
     @Test
     void increaseVolume() {
         Radio model = new Radio();
-        model.setCurrentVolume(7);
+        model.setCurrentVolume(70);
         model.increaseVolume();
 
-        int expected = 8;
+        int expected = 71;
         int actual = model.getCurrentVolume();
 
         assertEquals(actual, expected);
@@ -175,10 +233,10 @@ class RadioTest {
     @Test
     void downVolume() {
         Radio model = new Radio();
-        model.setCurrentVolume(3);
+        model.setCurrentVolume(70);
         model.downVolume();
 
-        int expected = 2;
+        int expected = 69;
         int actual = model.getCurrentVolume();
 
         assertEquals(actual, expected);
